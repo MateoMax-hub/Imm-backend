@@ -1,16 +1,13 @@
-// Importación de módulos de versiones anteriores
+//Importación de módulos de versiones anteriores
 const express = require("express");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 require('dotenv').config();
 
-// crear el servidor
+//Crear el servidor
 const app = express();
 
-//Settings
-app.set('port', process.env.PORT || 4000)
-
-
-// Conectar a mongodb
+//Conectar a mongodb
 mongoose.Promise = global.Promise;
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@clusterimm.5b9in.mongodb.net/test`,
@@ -20,15 +17,18 @@ mongoose.connect(
     useFindAndModify: false,
   }
 );
+//Settings
+app.set('port', process.env.PORT || 4000)
 
-// app uses 
+//Middlewares
+app.use(morgan('dev'))
 app.use(express.json({ extended: true }));
+app.use(express.urlencoded())
 
-// importe de rutas 
+//Importe de rutas 
 app.use('/api/usuarios', require('./routes/usuarios'))
 
-
-// puerto y arranque del servidor
+//Puerto y arranque del servidor
 app.listen(app.get('port'), () => {
-  console.log('Servidor Funcionando en puerto', app.get('port'));
+  console.log("Servidor Funcionando");
 });
