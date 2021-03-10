@@ -6,6 +6,8 @@ require('dotenv').config();
 // crear el servidor
 const app = express();
 
+//Settings
+app.set('port', process.env.PORT || 4000)
 
 
 // Conectar a mongodb
@@ -19,7 +21,6 @@ mongoose.connect(
   }
 );
 
-
 // app uses 
 app.use(express.json({ extended: true }));
 
@@ -28,6 +29,6 @@ app.use('/api/usuarios', require('./routes/usuarios'))
 
 
 // puerto y arranque del servidor
-app.listen(4000, () => {
-  console.log("Servidor Funcionando");
+app.listen(app.get('port'), () => {
+  console.log('Servidor Funcionando en puerto', app.get('port'));
 });
