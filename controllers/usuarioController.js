@@ -42,3 +42,7 @@ exports.crearUsuario = async (req, res) => {
         res.status(400).send('Hubo un error al crear usuario.');
     }
 };
+exports.usuarioLogueado = async (req, res) => {
+    const usuarioEncontrado = await Usuario.findById(req.usuario.id).select('email _id nombre');
+    res.send(usuarioEncontrado);
+};

@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cors = require("cors");
 require('dotenv').config();
 
 //Crear el servidor
@@ -19,6 +20,7 @@ mongoose.connect(
 );
 //Settings
 app.set('port', process.env.PORT || 4000)
+app.use(cors())
 
 //Middlewares
 app.use(morgan('dev'))
@@ -27,6 +29,7 @@ app.use(express.urlencoded())
 
 //Importe de rutas 
 app.use('/api/usuarios', require('./routes/usuarios'))
+app.use('/api/auth', require('./routes/auth'))
 
 //Puerto y arranque del servidor
 app.listen(app.get('port'), () => {
