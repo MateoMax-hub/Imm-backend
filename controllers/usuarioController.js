@@ -43,6 +43,6 @@ exports.crearUsuario = async (req, res) => {
     }
 };
 exports.usuarioLogueado = async (req, res) => {
-    const usuarioEncontrado = await Usuario.findById(req.usuario.id).select('email _id apellido edad nombre');
+    const usuarioEncontrado = await Usuario.findById(req.usuario.id).select('email _id apellido edad nombre check');
     res.send(usuarioEncontrado);
 };
