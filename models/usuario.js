@@ -11,11 +11,6 @@ const Usuario = mongoose.Schema({
         required: true,
         trim: true,
     },
-    edad: {
-        type: Number,
-        required: true,
-        trim: true,
-    },
     email: {
         type: String,
         required: true,
@@ -30,6 +25,18 @@ const Usuario = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
+    },
+    rol: {
+        type: String,
+        default: "usuario"
+    },
+    balance: {
+        type: Number,
+        default: 0
+    },
+    estadoCuenta: {
+        type: String,
+        default: "normal"
     }
 })
 
