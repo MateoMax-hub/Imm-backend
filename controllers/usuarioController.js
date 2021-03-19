@@ -71,3 +71,7 @@ exports.actualizarCartera = async (req, res) => {
         console.log(error);
     }
 }
+exports.obtenerUsuarios = async (req, res) => {
+    const users = await Usuario.find().select('-__v')
+    res.send(users)
+}
