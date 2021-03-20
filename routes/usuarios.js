@@ -15,6 +15,7 @@ router.get("/admin", usuarioController.obtenerUsuarios)
 
 // metodos put 
 router.put("/", auth, usuarioController.actualizarUsuario)
+router.put("/admin/usuario",  usuarioController.actualizarUsuarioAdmin)
 router.put("/cartera", auth, usuarioController.actualizarCartera)
 
 

@@ -3,6 +3,7 @@ const Usuario = require('../models/usuario');
 const { validationResult, body } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
+// Register de user 
 exports.crearUsuario = async (req, res) => {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
@@ -42,10 +43,14 @@ exports.crearUsuario = async (req, res) => {
         res.status(400).send('Hubo un error al crear usuario.');
     }
 };
+
+// login de user 
 exports.usuarioLogueado = async (req, res) => {
     const usuarioEncontrado = await Usuario.findById(req.usuario.id).select('-__v -password');
     res.send(usuarioEncontrado);
 };
+
+// cambio de contraseña 
 exports.actualizarUsuario = async (req, res) => {
     try {
         const { body, usuario } = req;
@@ -60,6 +65,8 @@ exports.actualizarUsuario = async (req, res) => {
         console.log(error);
     }
 }
+
+// depositar o extraer de cartera 
 exports.actualizarCartera = async (req, res) => {
     try{
         const { body, usuario } = req;
@@ -71,7 +78,21 @@ exports.actualizarCartera = async (req, res) => {
         console.log(error);
     }
 }
+
+// obtener todos los users para pag admin 
 exports.obtenerUsuarios = async (req, res) => {
     const users = await Usuario.find().select('-__v')
     res.send(users)
+}
+
+// actualizar datos de user desde admin 
+exports.actualizarUsuarioAdmin = async (req, res) => {
+    try {
+        const { body, usuario } = req;
+        console.log(body);
+        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: body.id}, body, {new:true})
+        res.send(usuarioActualizado)
+    } catch (error) {
+        console.log(error);
+    }
 }
