@@ -88,9 +88,10 @@ exports.obtenerUsuarios = async (req, res) => {
 // actualizar datos de user desde admin 
 exports.actualizarUsuarioAdmin = async (req, res) => {
     try {
-        const { body, usuario } = req;
+        const { body } = req;
+        const { userId } = req.params
         console.log(body);
-        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: body.id}, body, {new:true})
+        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: userId}, body, {new:true})
         res.send(usuarioActualizado)
     } catch (error) {
         console.log(error);
