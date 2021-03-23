@@ -59,8 +59,8 @@ exports.actualizarUsuario = async (req, res) => {
             const encryptedPass = await bcryptjs.hash(body.password, salt);
             body.password = encryptedPass;
         }
-        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: usuario.id}, body, {new:true})
-        res.send(usuarioActualizado)
+        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: usuario.id}, body, {new:true});
+        res.send(usuarioActualizado);
     } catch (error) {
         console.log(error);
     }
@@ -71,8 +71,8 @@ exports.actualizarCartera = async (req, res) => {
     try{
         const { body, usuario } = req;
         if (body.balance){
-            const balanceActualizado = await Usuario.findOneAndUpdate({ _id: usuario.id}, {$inc: {"balance": body.balance}}, {new:true})
-            res.send(balanceActualizado)
+            const balanceActualizado = await Usuario.findOneAndUpdate({ _id: usuario.id}, {$inc: {"balance": body.balance}}, {new:true});
+            res.send(balanceActualizado);
         }
     } catch (error) {
         console.log(error);
@@ -81,19 +81,27 @@ exports.actualizarCartera = async (req, res) => {
 
 // obtener todos los users para pag admin 
 exports.obtenerUsuarios = async (req, res) => {
-    const users = await Usuario.find().select('-__v')
-    res.send(users)
+    const users = await Usuario.find().select('-__v');
+    res.send(users);
 }
 
 // actualizar datos de user desde admin 
 exports.actualizarUsuarioAdmin = async (req, res) => {
     try {
         const { body } = req;
-        const { userId } = req.params
+        const { userId } = req.params;
         console.log(body);
-        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: userId}, body, {new:true})
-        res.send(usuarioActualizado)
+        const usuarioActualizado = await Usuario.findOneAndUpdate({ _id: userId}, body, {new:true});
+        res.send(usuarioActualizado);
     } catch (error) {
         console.log(error);
     }
+}
+
+// traer users desde la busqueda el land page 
+exports.obtenerUsuariosFiltrado = async (req,res) => {
+    const users = await Usuario.find().select('rol estadoCuenta nombre apellido');
+    const usersFiltrados = await users.filter((u) => u.nombre.toLowerCase().includes(req.body.filtro.toLowerCase()) 
+    || u.apellido.toLowerCase().includes(req.body.filtro.toLowerCase()));
+    res.send(usersFiltrados);
 }

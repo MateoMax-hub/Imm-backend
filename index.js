@@ -30,6 +30,8 @@ app.use(express.urlencoded())
 //Importe de rutas 
 app.use('/api/usuarios', require('./routes/usuarios'))
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/pedidos', require('./routes/pedidos'))
+app.use('/api/packs', require('./routes/packs'))
 
 //Puerto y arranque del servidor
 app.listen(app.get('port'), () => {
