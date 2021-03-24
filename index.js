@@ -11,7 +11,7 @@ const app = express();
 //Conectar a mongodb
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@clusterimm.5b9in.mongodb.net/test`,
+  `mongodb+srv://ImmAdmin:LeGras12@clusterimm.5b9in.mongodb.net/test`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
