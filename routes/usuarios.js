@@ -12,6 +12,7 @@ router.post("/", usuarioController.crearUsuario);
 // metodos get 
 router.get("/", auth, usuarioController.usuarioLogueado);
 router.get("/admin", usuarioController.obtenerUsuarios)
+router.get("/busqueda", usuarioController.obtenerUsuariosFiltrado)
 
 // metodos put 
 router.put("/", auth, usuarioController.actualizarUsuario)
