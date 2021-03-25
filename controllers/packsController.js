@@ -5,7 +5,6 @@ exports.crearPack = async (req,res) => {
     const packExistance = await Pack.find({proveedor: req.usuario.id})
     try {
         if (packExistance.length < 3) {
-            console.log('no existe el pack');
             const pack = new Pack({
                 ...req.body,
                 proveedor: req.usuario.id
@@ -13,8 +12,7 @@ exports.crearPack = async (req,res) => {
             await pack.save()
             res.send('exito')
         } else {
-            console.log('existe el pack');
-            res.send('exito not')
+            res.send('ya tienes el maximo de packs permitidos')
         }
     } catch (error) {
         console.log(error);

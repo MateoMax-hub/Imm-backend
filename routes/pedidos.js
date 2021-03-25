@@ -11,5 +11,8 @@ const packFind = require("../middlewares/packFind");
 router.post("/", auth, packFind, pedidosController.crearPedido)
 
 // metodos put 
+router.put ("/primera/:idPedido", auth, pedidosController.actualizarPrimera)
+router.put ("/segunda/:idPedido", auth, pedidosController.actualizarSegunda)
+router.put ("/tercera/:idPedido", auth, pedidosController.actualizarTercera)
 
 module.exports = router;
