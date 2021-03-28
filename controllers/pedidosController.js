@@ -8,9 +8,8 @@ const { ObjectId } = require('mongoose').Types;
 // Crear pedido
 exports.crearPedido = async (req,res) => {
 
-    const pack = await Pack.findById(req.pack.id)
-    console.log();
     try {
+        const pack = await Pack.findById(req.pack.id).populate('proveedor','nombre apellido')
         const pedido = new Pedido({
             ...req.body,
             createdAt: Date.now(),
@@ -72,7 +71,7 @@ exports.actualizarSegunda = async (req,res) => {
             }
         }
         const segundaEtapaUpdate = await Pedido.findOneAndUpdate({ _id: idPedido }, segundaEtapa, { new: true })
-        res.send("primera etapa actualizada con exito")
+        res.send("segunda etapa actualizada con exito")
     } catch (error) {
         console.log(error);
     }
@@ -94,8 +93,53 @@ exports.actualizarTercera = async (req,res) => {
             }
         }
         const terceraEtapaUpdate = await Pedido.findOneAndUpdate({ _id: idPedido }, terceraEtapa, { new: true })
-        res.send("primera etapa actualizada con exito")
+        res.send("tercera etapa actualizada con exito")
     } catch (error) {
         console.log(error);
+    }
+}
+
+exports.obtenerPedidosUser = async (req,res) => {
+    try {
+        const userRol = await Usuario.findOne({_id:req.usuario.id})
+        if (userRol.rol === "admin"){
+            const pedidos = await Pedido.find({proveedor: req.usuario.id})
+            if (pedidos.length === 0) {
+                const pedidosC = await Pedido.find({consumidor: req.usuario.id})
+                res.send(pedidosC)
+                return
+            }
+            res.send(pedidos)
+            return
+        }
+        if (userRol.rol === "consumidor"){
+            const pedidos = await Pedido.find({consumidor: req.usuario.id})
+            res.send(pedidos)
+        } else {
+            const pedidos = await Pedido.find({proveedor: req.usuario.id})
+            res.send(pedidos)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.cancelarPedido = async (req,res) => {
+    const { idPedido } = req.params
+    try {
+        const pedido = await Pedido.findById(idPedido)
+        if (!pedido.consumidor.equals(req.usuario.id)){
+            res.send('algo salio mal recarga la pagina y vuelve a intentarlo')
+            // si el consumidor del pedido no es el mismo que el intenta hacer la cancelacion 
+        }
+        if (pedido.primeraEtapa.estado === "pendiente"){
+            const reembolso = await Usuario.findOneAndUpdate({ _id: req.usuario.id}, {$inc: {"balance": pedido.precio}}, {new:true})
+            res.send('reembolso exitoso y cancelacion exitosos')
+        }
+        await pedido.remove()
+        res.send('exito')
+    } catch (error) {
+        console.log(error);
+        res.send(error)
     }
 }

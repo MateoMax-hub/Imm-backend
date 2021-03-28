@@ -18,7 +18,7 @@ const Pack = mongoose.Schema({
     },
     proveedor:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'usuario'
     }
 })
 
