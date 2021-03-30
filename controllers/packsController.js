@@ -1,7 +1,6 @@
 const Pack = require('../models/pack')
 
 exports.crearPack = async (req,res) => {
-
     const packExistance = await Pack.find({proveedor: req.usuario.id})
     try {
         if (packExistance.length < 3) {
@@ -11,7 +10,7 @@ exports.crearPack = async (req,res) => {
                 proveedor: req.usuario.id
             })
             await pack.save()
-            res.send('exito')
+            res.json(pack)
         } else {
             console.log('existe el pack');
             res.send('exito not')
