@@ -26,6 +26,9 @@ const Usuario = mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    imagen: {
+        type: String
+    },
     rol: {
         type: String,
         default: "usuario"
