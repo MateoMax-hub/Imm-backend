@@ -59,7 +59,7 @@ exports.actualizarSegunda = async (req,res) => {
     const { idPedido } = req.params
     try {
         const findPedido = await Pedido.findOne({_id: idPedido})
-        if (!findPedido.proveedor.equals(req.usuario.id)){
+        if (!findPedido.proveedor._id.equals(req.usuario.id)){
             res.send('algo salio mal recargue la pagina y vuelva a intentarlo')
             return
         }
