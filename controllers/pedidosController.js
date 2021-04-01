@@ -15,7 +15,7 @@ exports.crearPedido = async (req,res) => {
             createdAt: Date.now(),
             consumidor: req.usuario.id,
             proveedor: pack.proveedor,
-            packData: pack.descripcion,
+            pack: pack._id,
             precio: pack.precio
         })
         const packPrecio = pack.precio * -1
@@ -32,7 +32,7 @@ exports.crearPedido = async (req,res) => {
     }
 }
 
-// Actualizar pedido primera etapa
+// Actualizar etapas
 exports.actualizarPrimera = async (req,res) => {
     const { idPedido } = req.params
     try {
@@ -59,10 +59,7 @@ exports.actualizarSegunda = async (req,res) => {
     const { idPedido } = req.params
     try {
         const findPedido = await Pedido.findOne({_id: idPedido})
-        if (!findPedido.proveedor._id.equals(req.usuario.id)){
-            res.send('algo salio mal recargue la pagina y vuelva a intentarlo')
-            return
-        }
+        
         const segundaEtapa = {
             segundaEtapa: {
                 img: req.body.segundaEtapa.img,
@@ -99,6 +96,7 @@ exports.actualizarTercera = async (req,res) => {
     }
 }
 
+// obtener pedidos del user 
 exports.obtenerPedidosUser = async (req,res) => {
     try {
         const userRol = await Usuario.findOne({_id:req.usuario.id})
@@ -124,6 +122,7 @@ exports.obtenerPedidosUser = async (req,res) => {
     }
 }
 
+// reembolso de pedidos 
 exports.cancelarPedido = async (req,res) => {
     const { idPedido } = req.params
     try {
@@ -141,5 +140,20 @@ exports.cancelarPedido = async (req,res) => {
     } catch (error) {
         console.log(error);
         res.send(error)
+    }
+}
+
+// traer pedidos
+exports.obtenerPedidos = async (req,res) => {
+    try {
+        const user = await Usuario.findById(req.usuario.id)
+        if (user.rol !== "admin"){
+            res.send('error')
+            return
+        }
+        const pedidos = await Pedido.find().populate('pack','descripcion titulo').populate('consumidor', 'nombre apellido email')
+        res.send(pedidos)
+    } catch (error) {
+        console.log(error);
     }
 }

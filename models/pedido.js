@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const Pedido = mongoose.Schema({
-    packData: {
-        type: String,
+    pack: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         trim: true,
-        ref: 'Pack'
+        ref: 'pack'
     },
     createdAt: {
         type: Date,
@@ -14,7 +14,7 @@ const Pedido = mongoose.Schema({
     precio: {
         type: Number,
         required: true,
-        ref: 'Pack'
+        ref: 'pack'
         // viene de la coleccion pack 
     },
     proveedor: {

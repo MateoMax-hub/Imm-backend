@@ -7,6 +7,7 @@ const packFind = require("../middlewares/packFind");
 
 // metodos get 
 router.get("/", auth, pedidosController.obtenerPedidosUser)
+router.get("/admin", auth, pedidosController.obtenerPedidos)
 
 // metodos post 
 router.post("/", auth, packFind, pedidosController.crearPedido)
