@@ -23,3 +23,25 @@ exports.obtenerPacks = async (req,res) => {
     const packs = await Pack.find({proveedor: idProveedor})
     res.send(packs)
 }
+
+exports.obtenerPacksTodos = async (req,res) => {
+    try {
+        const packs = await Pack.find()
+        res.send(packs)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send('No hay packs disponibles al publico')
+    }
+}
+
+exports.deletePack = async (req,res) => {
+    const { packId } = req.params
+    try {
+        const pack = await Pack.findById(packId)
+        await pack.remove()
+        res.send('exito')
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error eliminar en pack')
+    }
+}
