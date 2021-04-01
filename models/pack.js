@@ -19,6 +19,9 @@ const Pack = mongoose.Schema({
     proveedor:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuario'
+    },
+    imagen:{
+        type: String,
     }
 })
 
