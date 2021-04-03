@@ -45,3 +45,25 @@ exports.deletePack = async (req,res) => {
         res.status(500).send('Error eliminar en pack')
     }
 }
+
+exports.favoritosPost = async (req,res) => {
+    try {
+        const pack = new Pack({
+            ...req.body,
+            proveedor: req.usuario.id
+        })
+        await pack.save()
+        res.json(pack)
+    } catch (error) {
+        console.log(error);
+    }
+}
+exports.obtenerFavoritos = async (req,res) => {
+    try {
+        const packs = await Pack.find()
+        res.send(packs)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send('No hay packs disponibles al publico')
+    }
+}
