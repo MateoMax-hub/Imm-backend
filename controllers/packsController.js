@@ -1,4 +1,5 @@
 const Pack = require('../models/pack')
+const Usuario = require('../models/usuario')
 
 exports.crearPack = async (req,res) => {
 
@@ -23,4 +24,19 @@ exports.obtenerPacks = async (req,res) => {
     const { idProveedor } = req.params
     const packs = await Pack.find({proveedor: idProveedor})
     res.send(packs)
+}
+
+exports.obtenerAdminPacks = async (req,res) => {
+    try{
+        const user = await Usuario.findById(req.usuario.id)
+        if (user.rol !== "admin"){
+            res.send('no sos admin flaco')
+            return
+        }
+        const packs = await Pack.find()
+        res.send(packs)
+    } catch(error){
+        console.log(error);
+        res.send(error)
+    }
 }

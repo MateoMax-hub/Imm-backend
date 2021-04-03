@@ -5,6 +5,7 @@ const packsController = require('../controllers/packsController')
 const auth = require("../middlewares/auth");
 
 // metodos get 
+router.get("/", auth, packsController.obtenerAdminPacks)
 router.get("/:idProveedor", packsController.obtenerPacks)
 
 // metodos post 
