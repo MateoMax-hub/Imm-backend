@@ -42,10 +42,10 @@ const Usuario = mongoose.Schema({
         default: "normal"
     },
     favorito: {
-        id:{
-            type: mongoose.Schema.Types.ObjectId
-        }
+        type : Array ,
+        default : [] 
     }
+
 })
 
 module.exports = mongoose.model('usuario', Usuario)

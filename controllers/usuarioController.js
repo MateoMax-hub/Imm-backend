@@ -109,13 +109,9 @@ exports.obtenerUsuariosFiltrado = async (req,res) => {
 exports.favoritosPut = async (req,res) => {
     const { idProducto } = req.params
     try {
-        const pack = new Usuario({
-            ...req.body,
-            proveedor: req.usuario.id
-        })
-        const final = await Pack.findOneAndUpdate({ id: idProducto }, pack, { new: true })
-        res.json(final)
-        console.log(final)
+        var id = {id:idProducto}
+        const final = await Usuario.findOneAndUpdate({_id:req.usuario.id},{$push:{favorito:id}})
+        res.send(final)
     } catch (error) {
         console.log(error);
     }
