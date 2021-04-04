@@ -10,7 +10,12 @@ router.get("/:idProveedor", packsController.obtenerPacks)
 
 // metodos post 
 router.post("/", auth, packsController.crearPack)
+router.post("/delete", packsController.deleteValidator)
 
 // metodos put 
+router.put("/:idPack", auth, packsController.actualizarPacks)
+
+// metodos delete
+router.delete("/:idPack", auth, packsController.deletePacks)
 
 module.exports = router;

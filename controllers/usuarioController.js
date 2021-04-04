@@ -81,7 +81,7 @@ exports.actualizarCartera = async (req, res) => {
 
 // obtener todos los users para pag admin 
 exports.obtenerUsuarios = async (req, res) => {
-    const users = await Usuario.find().select('-__v');
+    const users = await Usuario.find().select('-__v -imagen')
     res.send(users);
 }
 
