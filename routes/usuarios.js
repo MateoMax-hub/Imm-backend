@@ -18,6 +18,7 @@ router.get("/busqueda", usuarioController.obtenerUsuariosFiltrado)
 router.put("/", auth, usuarioController.actualizarUsuario)
 router.put("/admin/usuario/:userId",  usuarioController.actualizarUsuarioAdmin)
 router.put("/cartera", auth, usuarioController.actualizarCartera)
+router.put("/:idProducto", auth, usuarioController.favoritosPut)
 
 
 module.exports = router;

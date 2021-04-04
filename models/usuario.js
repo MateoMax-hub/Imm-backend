@@ -40,6 +40,11 @@ const Usuario = mongoose.Schema({
     estadoCuenta: {
         type: String,
         default: "normal"
+    },
+    favorito: {
+        id:{
+            type: mongoose.Schema.Types.ObjectId
+        }
     }
 })
 

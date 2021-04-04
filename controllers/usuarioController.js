@@ -105,3 +105,18 @@ exports.obtenerUsuariosFiltrado = async (req,res) => {
     || u.apellido.toLowerCase().includes(req.body.filtro.toLowerCase()));
     res.send(usersFiltrados);
 }
+
+exports.favoritosPut = async (req,res) => {
+    const { idProducto } = req.params
+    try {
+        const pack = new Usuario({
+            ...req.body,
+            proveedor: req.usuario.id
+        })
+        const final = await Pack.findOneAndUpdate({ id: idProducto }, pack, { new: true })
+        res.json(final)
+        console.log(final)
+    } catch (error) {
+        console.log(error);
+    }
+}
