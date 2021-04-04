@@ -113,7 +113,7 @@ exports.favoritosPut = async (req,res) => {
             ...req.body,
             proveedor: req.usuario.id
         })
-        const final = await Pack.findOneAndUpdate({ id: idProducto }, pack, { new: true })
+        const final = await Usuario.findOneAndUpdate({ id: idProducto }, pack, { new: true })
         res.json(final)
         console.log(final)
     } catch (error) {
