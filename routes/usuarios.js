@@ -13,7 +13,7 @@ router.post("/", usuarioController.crearUsuario);
 router.get("/", auth, usuarioController.usuarioLogueado);
 router.get("/admin", usuarioController.obtenerUsuarios)
 router.get("/busqueda", usuarioController.obtenerUsuariosFiltrado)
-
+router.get("/favorito", auth, usuarioController.favoritoGet);
 // metodos put 
 router.put("/", auth, usuarioController.actualizarUsuario)
 router.put("/admin/usuario/:userId",  usuarioController.actualizarUsuarioAdmin)

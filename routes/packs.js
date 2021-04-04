@@ -9,8 +9,6 @@ router.get("/:idProveedor", packsController.obtenerPacks)
 router.get("/", packsController.obtenerPacksTodos)
 // metodos post 
 router.post("/", auth, packsController.crearPack)
-
-
 // metodos delete 
 router.delete("/:packId", auth, packsController.deletePack)
 

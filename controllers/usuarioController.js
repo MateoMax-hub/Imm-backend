@@ -116,3 +116,25 @@ exports.favoritosPut = async (req,res) => {
         console.log(error);
     }
 }
+
+// mostrar favorito 
+exports.favoritoGet = async (req, res) => {
+    try{
+        const usuarioEncontrado = await Usuario.findById(req.usuario.id);
+        res.send(usuarioEncontrado);
+    }catch (error){
+        console.log(error)
+        res.status(404).send('error en packs favoritos')
+    }
+};
+
+exports.deleteFavorito = async (req,res) => {
+    try {
+        const pack = await Pack.findById(packId)
+        await pack.remove()
+        res.send('exito')
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error eliminar en pack')
+    }
+}
