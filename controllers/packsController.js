@@ -25,6 +25,13 @@ exports.obtenerPacks = async (req,res) => {
     res.send(packs)
 }
 
+exports.mostrarFavoritos = async (req,res) => {
+    const { idFavorito } = req.params
+    const packs = await Pack.find({_id: idFavorito})
+    res.send(packs)
+}
+
+
 exports.obtenerPacksTodos = async (req,res) => {
     try {
         const packs = await Pack.find()

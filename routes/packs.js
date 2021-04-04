@@ -6,6 +6,7 @@ const auth = require("../middlewares/auth");
 
 // metodos get 
 router.get("/:idProveedor", packsController.obtenerPacks)
+router.get("/favorito/:idFavorito", packsController.mostrarFavoritos)
 router.get("/", packsController.obtenerPacksTodos)
 // metodos post 
 router.post("/", auth, packsController.crearPack)
