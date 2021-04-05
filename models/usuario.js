@@ -42,7 +42,7 @@ const Usuario = mongoose.Schema({
         default: "normal"
     },
     favorito: {
-        type : Array ,
+        type : Array,
         default : [] 
     }
 
