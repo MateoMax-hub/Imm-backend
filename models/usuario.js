@@ -27,25 +27,27 @@ const Usuario = mongoose.Schema({
         default: Date.now(),
     },
     imagen: {
-        type: String
+        type: String,
     },
     rol: {
         type: String,
-        default: "usuario"
+        default: 'usuario',
     },
     balance: {
         type: Number,
-        default: 0
+        default: 0,
     },
     estadoCuenta: {
         type: String,
-        default: "normal"
+        default: 'normal',
     },
-    favorito: {
-        type : Array ,
-        default : [] 
-    }
+    favorito: [{
+        pack: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'pack',
+            _id: false 
+        } 
+    }],
+});
 
-})
-
-module.exports = mongoose.model('usuario', Usuario)
+module.exports = mongoose.model('usuario', Usuario);

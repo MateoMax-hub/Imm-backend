@@ -109,9 +109,18 @@ exports.obtenerUsuariosFiltrado = async (req,res) => {
 exports.favoritosPut = async (req,res) => {
     const { idProducto } = req.params
     try {
-        var id = {id:idProducto}
-        const final = await Usuario.findOneAndUpdate({_id:req.usuario.id},{$push:{favorito:id}})
+        var pack = {pack:idProducto}
+        const final = await Usuario.findOneAndUpdate({_id:req.usuario.id},{$push:{favorito:pack}}, {new:true})
         res.send(final)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.obtenerFavoritos = async (req,res) => {
+    try {
+        const user = await Usuario.findById(req.usuario.id).populate('favorito.pack','titulo precio descripcion imagen').select('favorito.-_id _id createdAt balance nombre apellido email imagen')
+        res.send(user)
     } catch (error) {
         console.log(error);
     }
