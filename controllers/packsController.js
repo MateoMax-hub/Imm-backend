@@ -1,8 +1,6 @@
 const Pack = require('../models/pack')
-const Usuario = require('../models/usuario')
 
 exports.crearPack = async (req,res) => {
-
     const packExistance = await Pack.find({proveedor: req.usuario.id})
     try {
         if (packExistance.length < 3) {
@@ -11,7 +9,7 @@ exports.crearPack = async (req,res) => {
                 proveedor: req.usuario.id
             })
             await pack.save()
-            res.send('exito')
+            res.json(pack)
         } else {
             res.send('ya tienes el maximo de packs permitidos')
         }
@@ -26,17 +24,32 @@ exports.obtenerPacks = async (req,res) => {
     res.send(packs)
 }
 
-exports.obtenerAdminPacks = async (req,res) => {
-    try{
-        const user = await Usuario.findById(req.usuario.id)
-        if (user.rol !== "admin"){
-            res.send('no sos admin flaco')
-            return
-        }
+exports.obtenerPacksTodos = async (req,res) => {
+    try {
         const packs = await Pack.find()
         res.send(packs)
-    } catch(error){
+    } catch (error) {
+        console.log(error)
+        res.status(400).send('No hay packs disponibles al publico')
+    }
+}
+
+exports.deletePack = async (req,res) => {
+    const { packId } = req.params
+    try {
+        const pack = await Pack.findById(packId)
+        await pack.remove()
+        res.send('exito')
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error eliminar en pack')
+    }
+}
+
+exports.deletePackValidation = async (req,res) => {
+    try {
+        
+    } catch (error) {
         console.log(error);
-        res.send(error)
     }
 }
