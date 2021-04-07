@@ -6,7 +6,7 @@ const consultaController = require("../controllers/consultaController");
 const auth = require("../middlewares/auth");
 
 // metodos post 
-router.post("/", consultaController.consultaPost);
+router.post("/", auth, consultaController.consultaPost);
 // metodos get 
 router.get("/", auth, consultaController.consultaGet);
 

@@ -2,14 +2,10 @@ const mongoose = require('mongoose')
 
 const Consulta = mongoose.Schema({
     nombre:{
-        type: String,
-        required: true,
-        trim: true
+        type: String
     },
     apellido:{
-        type: String,
-        required: true,
-        trim: true
+        type: String
     },
     titulo:{
         type: String,
