@@ -44,8 +44,7 @@ const Usuario = mongoose.Schema({
     favorito: [{
         pack: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'pack',
-            _id: false 
+            ref: 'pack'
         } 
     }],
 });

@@ -109,8 +109,11 @@ exports.obtenerUsuariosFiltrado = async (req,res) => {
 exports.favoritosPut = async (req,res) => {
     const { idProducto } = req.params
     try {
+        const user = await Usuario.findById(req.usuario.id)
+        const favExist = user.favorito.find((p) => p.pack == idProducto)
+        const operador = favExist?'$pull':'$push'
         var pack = {pack:idProducto}
-        const final = await Usuario.findOneAndUpdate({_id:req.usuario.id},{$push:{favorito:pack}}, {new:true})
+        const final = await Usuario.findOneAndUpdate({_id:req.usuario.id},{[operador]:{favorito:pack}}, {new:true})
         res.send(final)
     } catch (error) {
         console.log(error);
