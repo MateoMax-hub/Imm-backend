@@ -1,4 +1,5 @@
 const Pack = require('../models/pack')
+const Pedido = require('../models/pedido')
 
 exports.crearPack = async (req,res) => {
     const packExistance = await Pack.find({proveedor: req.usuario.id})
@@ -48,7 +49,14 @@ exports.deletePack = async (req,res) => {
 
 exports.deletePackValidation = async (req,res) => {
     try {
-        
+        const pedido = await Pedido.findOne({pack: req.body._id})
+        if (pedido){
+            res.send(true)
+            return
+        } else {
+            res.send(false)
+            return
+        }
     } catch (error) {
         console.log(error);
     }
