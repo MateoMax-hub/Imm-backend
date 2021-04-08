@@ -5,17 +5,16 @@ const packsController = require('../controllers/packsController')
 const auth = require("../middlewares/auth");
 
 // metodos get 
-router.get("/", auth, packsController.obtenerAdminPacks)
 router.get("/:idProveedor", packsController.obtenerPacks)
-
+router.get("/", packsController.obtenerPacksTodos)
 // metodos post 
 router.post("/", auth, packsController.crearPack)
-router.post("/delete", packsController.deleteValidator)
+router.post("/delete", packsController.deletePackValidation)
 
 // metodos put 
 router.put("/:idPack", auth, packsController.actualizarPacks)
 
-// metodos delete
-router.delete("/:idPack", auth, packsController.deletePacks)
+// metodos delete 
+router.delete("/:packId", auth, packsController.deletePack)
 
 module.exports = router;

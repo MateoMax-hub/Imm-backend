@@ -56,30 +56,37 @@ exports.actualizarPacks = async (req, res) => {
     }
 };
 
-exports.deletePacks = async (req,res) => {
+exports.obtenerPacksTodos = async (req,res) => {
     try {
-        const user = await Usuario.findById(req.usuario.id)
-        const {idPack} = req.params;
-        const pack = await Pack.findById(idPack)
-        if (user.rol !== 'admin') {
-            res.send('no sos admin flaco');
-            return;
-        }
-        await pack.delete()
-        res.send('listok')
+        const packs = await Pack.find()
+        res.send(packs)
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        res.status(400).send('No hay packs disponibles al publico')
     }
 }
 
-exports.deleteValidator = async (req,res) => {
+exports.deletePack = async (req,res) => {
+    const { packId } = req.params
     try {
-        const pedidoExistanse = await Pedido.findOne({pack: req.body._id})
-        console.log(req.body._id);
-        if (pedidoExistanse){
+        const pack = await Pack.findById(packId)
+        await pack.remove()
+        res.send('exito')
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error eliminar en pack')
+    }
+}
+
+exports.deletePackValidation = async (req,res) => {
+    try {
+        const pedido = await Pedido.findOne({pack: req.body._id})
+        if (pedido){
             res.send(true)
+            return
         } else {
             res.send(false)
+            return
         }
     } catch (error) {
         console.log(error);
