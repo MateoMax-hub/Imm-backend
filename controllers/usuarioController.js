@@ -122,7 +122,7 @@ exports.favoritosPut = async (req,res) => {
 
 exports.obtenerFavoritos = async (req,res) => {
     try {
-        const user = await Usuario.findById(req.usuario.id).populate('favorito.pack','titulo precio descripcion imagen').select('favorito.-_id _id createdAt balance nombre apellido email imagen')
+        const user = await Usuario.findById(req.usuario.id).populate('favorito.pack','titulo precio descripcion imagen').select('favorito.-_id _id createdAt balance nombre apellido email imagen rol')
         res.send(user)
     } catch (error) {
         console.log(error);
