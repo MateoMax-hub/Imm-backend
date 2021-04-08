@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Pack = mongoose.Schema({
+const Favorito = mongoose.Schema({
     titulo:{
         type: String,
         required: true,
@@ -23,7 +23,6 @@ const Pack = mongoose.Schema({
     imagen:{
         type: String,
     }
-    
 })
 
-module.exports = mongoose.model('pack', Pack)
+module.exports = mongoose.model('favorito', Favorito)
