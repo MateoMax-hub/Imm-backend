@@ -270,3 +270,13 @@ exports.obtenerPedidos = async (req, res) => {
         console.log(error);
     }
 };
+
+exports.obtenerCompletados = async (req, res) => {
+    try {
+        const pedidos = await Pedido.find({consumidor: req.usuario.id}).select('segundaEtapa')
+        const pedidosCompletados = pedidos.filter((p) => p.segundaEtapa.estado === "completada")
+        res.send(pedidosCompletados)
+    } catch (error) {
+        console.log(error);
+    }
+}
