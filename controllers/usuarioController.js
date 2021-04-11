@@ -128,3 +128,25 @@ exports.obtenerFavoritos = async (req,res) => {
         console.log(error);
     }
 }
+
+exports.tokenValidator = async (req,res) => {
+    try {
+        res.send(req.usuario.validState)
+    } catch (error) {
+        console.log(error);
+        res.send(error)
+    }
+}
+
+exports.adminValidation = async (req,res) => {
+    try {
+        const isAdmin = await Usuario.findById(req.usuario.id)
+        if (isAdmin.rol === 'admin'){
+            res.send(true)
+        } else {
+            res.send(false)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
