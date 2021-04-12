@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { validationResult, body } = require('express-validator');
 const jwt = require('jsonwebtoken');
-
+const Pack = require('../models/pack');
 
 // Register de user
 exports.crearUsuario = async (req, res) => {
@@ -135,6 +135,19 @@ exports.favoritosPut = async (req, res) => {
 
 exports.obtenerFavoritos = async (req, res) => {
     try {
+        const usuario = await Usuario.findById(req.usuario.id);
+        const packs = await Pack.find().select('_id');
+        for (let i = 0; i < usuario.favorito.length; i++) {
+            const element = usuario.favorito[i];
+            const favPackExist = packs.find((m) => m._id.toString() === element.pack.toString());
+            if (!favPackExist) {
+                const final = await Usuario.findOneAndUpdate(
+                    { _id: req.usuario.id },
+                    { $pull: { favorito: {pack:element.pack} } },
+                    { new: true }
+                );
+            }
+        }
         const user = await Usuario.findById(req.usuario.id)
             .populate('favorito.pack', 'titulo precio descripcion imagen')
             .select('favorito.-_id _id createdAt balance nombre apellido email imagen rol');
@@ -161,7 +174,6 @@ exports.adminValidation = async (req, res) => {
         } else {
             res.send(false);
         }
-
     } catch (error) {
         console.log(error);
     }
