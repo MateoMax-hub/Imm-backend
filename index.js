@@ -33,6 +33,7 @@ app.use('/api/usuarios', require('./routes/usuarios'))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/pedidos', require('./routes/pedidos'))
 app.use('/api/packs', require('./routes/packs'))
+app.use('/api/consulta', require('./routes/consulta'))
 
 //Puerto y arranque del servidor
 app.listen(app.get('port'), () => {
