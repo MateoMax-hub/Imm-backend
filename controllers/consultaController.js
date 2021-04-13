@@ -2,14 +2,11 @@ const Consulta = require('../models/consulta');
 const Usuario = require('../models/usuario')
 
 exports.consultaPost = async (req, res) => {
-    //const user = await Usuario.findById(req.user.id).populate('proveedor','nombre apellido')
-    const usuarioConsultor = await Usuario.findOne({_id: req.usuario.id});
     try {
         const consulta = new Consulta({
             ...req.body,
             createdAt: Date.now(),
-            nombre: usuarioConsultor.nombre,
-            apellido: usuarioConsultor.apellido
+            usuario: req.usuario.id
         });
         await consulta.save();
         res.send(consulta);
@@ -21,7 +18,7 @@ exports.consultaPost = async (req, res) => {
 
 exports.consultaGet = async (req, res) => {
     try {
-        const consulta = await Consulta.find();
+        const consulta = await Consulta.find().populate('usuario','nombre apellido email')
         res.send(consulta);
     } catch (error) {
         console.log(error);

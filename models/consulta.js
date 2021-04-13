@@ -1,12 +1,6 @@
 const mongoose = require('mongoose')
 
 const Consulta = mongoose.Schema({
-    nombre:{
-        type: String
-    },
-    apellido:{
-        type: String
-    },
     titulo:{
         type: String,
         required: true,
@@ -20,6 +14,11 @@ const Consulta = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
+    },
+    usuario: {
+        type: mongoose.Schema.Types.ObjectId,
+        require: true,
+        ref: "usuario"
     }
 })
 
