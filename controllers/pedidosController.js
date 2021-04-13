@@ -109,6 +109,7 @@ exports.actualizarSegunda = async (req, res) => {
     const { idPedido } = req.params;
     try {
         const findPedido = await Pedido.findOne({ _id: idPedido });
+        const user = await Usuario.findById(findPedido.consumidor)
 
         const segundaEtapa = {
             segundaEtapa: {
@@ -119,6 +120,21 @@ exports.actualizarSegunda = async (req, res) => {
         };
         const segundaEtapaUpdate = await Pedido.findOneAndUpdate({ _id: idPedido }, segundaEtapa, {
             new: true,
+        });
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'ImmEditLeGras12@gmail.com',
+                pass: 'xplxrejzuihkysvy',
+            },
+        });
+        await transporter.sendMail({
+            from: '<ImmEditLeGras12@gmail.com>',
+            to: `${user.email}`,
+            subject: 'El editor de ImmEdit termino tu encargo!',
+            text: `El editor de ImmEdit termino de trabajar con tu foto!, pasate por la pagina para poder verla y descargarla.`,
         });
         res.send('segunda etapa actualizada con exito');
     } catch (error) {
@@ -186,7 +202,7 @@ exports.obtenerPedidosUser = async (req, res) => {
             res.send(pedidos);
             return;
         }
-        if (userRol.rol === 'consumidor') {
+        if (userRol.rol === 'usuario') {
             const pedidos = await Pedido.find({ consumidor: req.usuario.id });
             res.send(pedidos);
         } else {
