@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Pack = mongoose.Schema({
+const Consulta = mongoose.Schema({
     titulo:{
         type: String,
         required: true,
@@ -11,19 +11,15 @@ const Pack = mongoose.Schema({
         required: true,
         trim: true
     },
-    precio:{
-        type: Number,
-        required: true,
-        trim: true
+    createdAt: {
+        type: Date,
+        default: Date.now(),
     },
-    proveedor:{
+    usuario: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuario'
-    },
-    imagen:{
-        type: String,
+        require: true,
+        ref: "usuario"
     }
-    
 })
 
-module.exports = mongoose.model('pack', Pack)
+module.exports = mongoose.model('consulta', Consulta)

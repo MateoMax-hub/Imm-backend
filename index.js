@@ -23,6 +23,7 @@ app.set('port', process.env.PORT || 4000)
 app.use(cors())
 
 //Middlewares
+app.use(express.json({ limit: '50mb', extended: true }));
 app.use(morgan('dev'))
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded())
@@ -32,6 +33,7 @@ app.use('/api/usuarios', require('./routes/usuarios'))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/pedidos', require('./routes/pedidos'))
 app.use('/api/packs', require('./routes/packs'))
+app.use('/api/consulta', require('./routes/consulta'))
 
 //Puerto y arranque del servidor
 app.listen(app.get('port'), () => {
